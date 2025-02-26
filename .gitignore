@@ -1,0 +1,16 @@
+# Ignora arquivos e pastas do sistema
+.DS_Store
+Thumbs.db
+
+# Ignora pastas de dependências (ex.: Node.js)
+node_modules/
+
+# Ignora arquivos de log
+*.log
+
+# Ignora arquivos de configuração de ambiente
+.env
+
+# Ignora diretórios de build ou compilados
+/dist
+/build
