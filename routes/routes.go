@@ -1,15 +1,39 @@
 package routes
 
-func Routes(route string) string {
+import (
+	"errors"
+	"fmt"
+	"servidor-tcp/services"
+)
 
+var (
+	ErrRouteNotFound = errors.New("rota não encontrada")
+	ErrServiceFailed = errors.New("falha no serviço")
+)
+
+func Routes(route string) (string, error) {
 	switch route {
 	case "/":
-		return "Welcome to the home page"
-	case "/about":
-		return "Welcome to the about page"
-	case "/contact":
-		return "Welcome to the contact page"
+		dados, err := services.GetCountries()
+		if err != nil {
+			fmt.Printf("Erro ao obter dados dos países: %v\n", err)
+			return "", fmt.Errorf("%w: não foi possível obter dados dos países", ErrServiceFailed)
+		}
+		return dados, nil
+		
+	case "/search":
+		return "Bem-vindo à página sobre", nil
+		
+		
 	default:
-		return "404 Not Found"
+		fmt.Printf("Tentativa de acesso a rota inexistente: %s\n", route)
+		return "", fmt.Errorf("%w: %s", ErrRouteNotFound, route)
+	}
+}
+
+func GetAvailableRoutes() []string {
+	return []string{
+		"/",
+		"/search",
 	}
 }
